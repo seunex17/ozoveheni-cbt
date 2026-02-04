@@ -1,8 +1,14 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
   import type { PageData } from "./$types";
   import { Lock, User } from "lucide-svelte";
 
   let { data }: { data: PageData } = $props();
+
+  // Functions
+  const login = () => {
+    goto("/exam");
+  };
 </script>
 
 <main class="w-screen h-screen flex flex-col justify-center items-center">
@@ -17,7 +23,7 @@
   </div>
   <div class="card w-96 bg-base-100 shadow-sm">
     <div class="card-body">
-      <form action="" class="space-y-5">
+      <form class="space-y-5">
         <div>
           <label for="id" class="input">
             <User class="opacity-50" />
@@ -31,7 +37,11 @@
           </label>
         </div>
         <div>
-          <button class="btn btn-primary btn-block">Login</button>
+          <button
+            type="button"
+            onclick={login}
+            class="btn btn-primary btn-block">Login</button
+          >
         </div>
       </form>
     </div>
