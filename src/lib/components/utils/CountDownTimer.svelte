@@ -29,7 +29,11 @@
 </script>
 
 <div
-  class="radial-progress bg-primary text-primary-content border-primary border-4"
+  class={{
+    "radial-progress border-4": true,
+    "bg-primary border-primary text-primary-content": minutes > 5,
+    "bg-error border-error text-error-content": minutes <= 5,
+  }}
   style="--value:{percentage}; --size:10rem; --thickness: 12px;"
   role="progressbar"
 >

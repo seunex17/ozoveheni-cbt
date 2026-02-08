@@ -1,13 +1,43 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
+  import appConfig from "$lib/configs/app-config";
+  import { toast } from "svelte-sonner";
   import type { PageData } from "./$types";
-  import { Lock, User } from "lucide-svelte";
+  import { GraduationCap, Loader, Lock, User } from "lucide-svelte";
+  import { examState } from "$lib/states/exam-states.svelte";
 
   let { data }: { data: PageData } = $props();
 
+  let regNo = $state("");
+  let isLoading: boolean = $state(false);
+
   // Functions
-  const login = () => {
-    goto("/exam");
+  const login = async () => {
+    isLoading = true;
+    const resp = await fetch(`${appConfig.base_url}student-login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({ reg_no: regNo }),
+    });
+
+    const data = await resp.json();
+
+    if (data.type === "error") {
+      toast.error(data.message);
+    }
+
+    if (data.type === "start") {
+      examState.studentID = data.student.id;
+      examState.student = data.student;
+      examState.attemptD = data.attempt_id;
+
+      goto("/exam");
+    }
+
+    isLoading = false;
   };
 </script>
 
@@ -26,22 +56,30 @@
       <form class="space-y-5">
         <div>
           <label for="id" class="input">
-            <User class="opacity-50" />
-            <input type="text" placeholder="Student ID" />
-          </label>
-        </div>
-        <div>
-          <label for="cource_code" class="input">
-            <Lock class="opacity-50" />
-            <input type="text" placeholder="Course Code" />
+            <GraduationCap class="opacity-50" />
+            <input
+              type="text"
+              bind:value={regNo}
+              placeholder="Registration No"
+            />
           </label>
         </div>
         <div>
           <button
             type="button"
             onclick={login}
-            class="btn btn-primary btn-block">Login</button
+            disabled={!regNo || isLoading}
+            class="btn btn-primary btn-block"
           >
+            {#if isLoading}
+              <span class="animate-spin">
+                <Loader size="18" />
+              </span>
+              Please Wait...
+            {:else}
+              Login
+            {/if}
+          </button>
         </div>
       </form>
     </div>

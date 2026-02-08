@@ -3,6 +3,7 @@
   import { speak } from "tauri-plugin-tts-api";
   import { onMount } from "svelte";
   import { CheckCheck } from "lucide-svelte";
+  import { examState } from "$lib/states/exam-states.svelte";
 
   let { data }: { data: PageData } = $props();
 
@@ -52,15 +53,18 @@
         <div class="grid grid-cols-2 gap-3">
           <div>
             <p class="text-sm text-gray-600 mb-1">Student Name</p>
-            <p class="font-semibold">John Doe</p>
+            <p class="font-semibold">
+              {examState.student.last_name}
+              {examState.student.first_name}
+            </p>
           </div>
 
           <div>
             <p class="text-sm text-gray-600 mb-1">Student ID</p>
-            <p class="font-semibold">1234567890</p>
+            <p class="font-semibold">{examState.student.reg_no}</p>
           </div>
 
-          <div>
+          <!-- <div>
             <p class="text-sm text-gray-600 mb-1">Course</p>
             <p class="font-semibold">Mathematics</p>
           </div>
@@ -68,12 +72,12 @@
           <div>
             <p class="text-sm text-gray-600 mb-1">Submitted Time</p>
             <p class="font-semibold">Time Here</p>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="divider"></div>
       <!-- Stats Grid -->
-      <div class="grid grid-cols-3 gap-4 text-center">
+      <!-- <div class="grid grid-cols-3 gap-4 text-center">
         <div class="bg-success/40 rounded-xl p-3">
           <p class="text-2xl font-bold">44</p>
           <p class="text-sm">Answered</p>
@@ -86,10 +90,10 @@
           <p class="text-2xl font-bold">50</p>
           <p class="text-sm">Un-answered</p>
         </div>
-      </div>
+      </div> -->
     </div>
     <div class="card-action text-center">
-      <p class="text-sm font-semibold">All done, please leave teh hall</p>
+      <p class="text-sm font-semibold">All done, please leave the hall</p>
     </div>
   </div>
 </main>

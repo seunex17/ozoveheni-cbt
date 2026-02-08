@@ -2,7 +2,7 @@
   import { examState } from "$lib/states/exam-states.svelte";
   import { Newspaper } from "lucide-svelte";
 
-  // your script goes here
+  let { exam } = $props();
 </script>
 
 <div class="bg-base-100 border-b border-base-200 sticky top-0 z-50 shadow-sm">
@@ -16,8 +16,8 @@
             <Newspaper class="text-primary-content" size="18" />
           </div>
           <div>
-            <h1 class="text-lg font-bold">Mathematics</h1>
-            <p class="text-sm text-slate-600">MTH-201</p>
+            <h1 class="text-lg font-bold">{exam.course.name}</h1>
+            <p class="text-sm text-slate-600">{exam.course.code}</p>
           </div>
         </div>
 

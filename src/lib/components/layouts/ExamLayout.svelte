@@ -4,15 +4,15 @@
   import ExamHeader from "./partials/ExamHeader.svelte";
   import ExamQuestionsNav from "./partials/ExamQuestionsNav.svelte";
 
-  let { children } = $props();
+  let { children, exam, questions } = $props();
 </script>
 
 <div class="w-screen h-screen bg-base-200 flex flex-col overflow-hidden">
-  <ExamHeader />
+  <ExamHeader {exam} />
   <div class="grow container mx-auto px-6 py-8 overflow-hidden">
     <div class="flex gap-6 h-full">
       <div class="w-3/12">
-        <ExamQuestionsNav />
+        <ExamQuestionsNav {questions} />
       </div>
       <div class="w-6/12 h-full overflow-y-auto">
         {@render children()}
@@ -20,11 +20,11 @@
       <div class="w-3/12 flex flex-col gap-3 h-full">
         <div class="card w-full bg-base-100 shadow-lg shadow-base-200/50 p-6">
           <div class="card-bod flex justify-center">
-            <CountDownTimer durationSeconds={3600} />
+            <CountDownTimer durationSeconds={exam.duration * 60} />
           </div>
         </div>
         <div class="grow h-full">
-          <StudentCard />
+          <StudentCard {exam} />
         </div>
       </div>
     </div>
