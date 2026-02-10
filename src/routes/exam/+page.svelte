@@ -86,7 +86,11 @@
   });
 </script>
 
-<ExamLayout exam={data.output.singleExam} questions={data.output.questions}>
+<ExamLayout
+  exam={data.output.singleExam}
+  questions={data.output.questions}
+  onTimeUp={submitExam}
+>
   <div
     class="card w-full h-full flex flex-col bg-base-100 shadow-xl shadow-base-200/50 p-6"
   >

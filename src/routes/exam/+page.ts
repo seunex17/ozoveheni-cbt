@@ -11,7 +11,7 @@ export const load = (async ({ fetch }) => {
   let student = examState.student;
 
   const response = await fetch(
-    `${appConfig.base_url}load-questions/${student.department_id}/${student.set}/${examState.attemptD}`,
+    `${appConfig.base_url}load-questions/${student.department_id}/${student.set.replace("/", "-")}/${examState.attemptD}`,
   );
 
   if (!response.ok) {

@@ -4,6 +4,8 @@
   import { onMount } from "svelte";
   import { CheckCheck } from "lucide-svelte";
   import { examState } from "$lib/states/exam-states.svelte";
+  import { echo } from "$lib/echo";
+  import { goto } from "$app/navigation";
 
   let { data }: { data: PageData } = $props();
 
@@ -20,6 +22,20 @@
       });
     } catch (err) {
       console.error("TTS failed:", err);
+    }
+  });
+
+  onMount(() => {
+    if (echo) {
+      echo.channel("sweep-hall").listen("SeepExamHallEvent", (e) => {
+        examState.answers = {};
+        examState.attemptD = 0;
+        examState.currentIndex = 0;
+        examState.student = {};
+        examState.studentID = 0;
+
+        goto("/auth/login");
+      });
     }
   });
 </script>
