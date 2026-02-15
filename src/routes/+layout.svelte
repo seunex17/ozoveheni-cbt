@@ -3,6 +3,8 @@
   import type { LayoutData } from "./$types";
   import "../app.css";
   import { Toaster, toast } from "svelte-sonner";
+  import { echo } from "$lib/echo";
+  import { exit } from "@tauri-apps/plugin-process";
 
   let { data, children }: { data: LayoutData; children: Snippet } = $props();
 
@@ -30,6 +32,17 @@
     return () => {
       window.removeEventListener("keydown", handleKeydown);
     };
+  });
+
+  onMount(() => {
+    if (echo) {
+      echo
+        .channel("close-exam-hall")
+        .listen("CloseExamHallEvent", async (e) => {
+          console.log(e);
+          await exit(0);
+        });
+    }
   });
 </script>
 

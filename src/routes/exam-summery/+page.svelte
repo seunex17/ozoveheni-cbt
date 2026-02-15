@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { PageData } from "./$types";
-  import { speak } from "tauri-plugin-tts-api";
   import { onMount } from "svelte";
   import { CheckCheck } from "lucide-svelte";
   import { examState } from "$lib/states/exam-states.svelte";
@@ -8,22 +7,6 @@
   import { goto } from "$app/navigation";
 
   let { data }: { data: PageData } = $props();
-
-  onMount(async () => {
-    try {
-      await speak({
-        text: "Your exam has been submitted successfully. Please quietly leave the hall. I wish you Good luck!",
-        volume: 1.0,
-        rate: 1.0,
-        language: "en",
-        pitch: 1.0,
-        voiceId: "",
-        queueMode: null,
-      });
-    } catch (err) {
-      console.error("TTS failed:", err);
-    }
-  });
 
   onMount(() => {
     if (echo) {
